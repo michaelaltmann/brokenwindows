@@ -16,13 +16,14 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 class CrimeQuery {
-	static String APPLICATION_KEY = 'TBD'
+	static String APPLICATION_KEY = 'AIzaSyAm9yWCV7JPCTHCJut8whOjARd7pwROFDQ'
 	public List getCrimes(/*Date startDate, Date endDate, double latitude, double longitude, */ int distance ) {
 		HttpURLClient http = new HttpURLClient()
 		String sql ="""SELECT  * FROM 1nSF0DFb9b_q-YcLnLWSSTdB8HmgxbBZJJ2HGY00 
 WHERE DATE > '2011-01-01T00:00:00' 
 and  DATE < '2012-04-01T00:00:00' 
-AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG(44.928516, -93.17721),$distance)) """
+AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG(44.928516, -93.17721),$distance))
+LIMIT 10 """
 		
 		
 		

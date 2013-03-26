@@ -4,8 +4,8 @@
 <meta name="layout" content="main" />
 <title>Welcome to Grails</title>
 <script type="text/javascript">
-function shwoCrimes(response) {
-	alert("Got " = response)
+function showCrimes(response) {
+	alert("Got " + response)
 }
 </script>
 <style type="text/css" media="screen">
