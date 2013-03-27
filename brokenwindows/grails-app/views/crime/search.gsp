@@ -4,8 +4,8 @@
 <meta name="layout" content="main" />
 <title>Welcome to Grails</title>
 <script type="text/javascript">
-function shwoCrimes(response) {
-	alert("Got " = response)
+function showCrimes(response) {
+	alert("Got " + response)
 }
 </script>
 <style type="text/css" media="screen">
@@ -90,7 +90,7 @@ p {
 	
 	<div id="page-body" role="main">
 	<H3>Find Crimes Near Me </H3>
-		<g:formRemote name="searchCrimes" onSuccess="showCrimes(e)" url="[controller:'crime', action:'search']" >
+		<g:formRemote name="searchCrimes" onSuccess="showCrimes(data)" url="[controller:'crime', action:'search']" >
 			<table>
 				<tbody>
 					<tr class="prop">

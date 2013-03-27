@@ -12,7 +12,8 @@ class CrimeController {
 		def distance = params.int('distance')
 		if (distance == null) distance = 1000
 		List crimes = query.getCrimes(distance)
-		render crimes as JSON
+		def json =  crimes as JSON
+		render json
 	}
 }
 
