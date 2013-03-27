@@ -90,7 +90,7 @@ p {
 	
 	<div id="page-body" role="main">
 	<H3>Find Crimes Near Me </H3>
-		<g:formRemote name="searchCrimes" onSuccess="showCrimes(data)" url="[controller:'crime', action:'search']" >
+		<g:formRemote name="searchCrimes" update="updateMe" url="[controller:'crime', action:'search']" >
 			<table>
 				<tbody>
 					<tr class="prop">
@@ -117,7 +117,9 @@ p {
 			</table>
 			<g:submitButton name="Search"/>
 			</g:formRemote>
-		<div id="updateMe"/>
+			<table><tbody>
+					<div id="updateMe"/>			
+			</tbody></table>
 	</div>
 </body>
 </html>
