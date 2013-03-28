@@ -22,12 +22,16 @@ class CrimeQuery {
 		p.load(CrimeQuery.class.getResourceAsStream("/app.properties"))
 		APPLICATION_KEY = p.getProperty("google.api.key")
 	}
-	public List getCrimes(/*Date startDate, Date endDate, double latitude, double longitude, */ int distance ) {
+	public List getCrimes(String homeAddress, Date startDate, Date endDate, int distance ) {
 		HttpURLClient http = new HttpURLClient()
+		
+		SimpleDateFormat format = new SimpleDateFormat('yyyy-MM-dd\'T\'HH:mm:ss')
+		String startString = format.format(startDate)
+		String endString = format.format(endDate)
 		String sql ="""SELECT  * FROM 1nSF0DFb9b_q-YcLnLWSSTdB8HmgxbBZJJ2HGY00 
-WHERE DATE > '2011-01-01T00:00:00' 
-and  DATE < '2012-04-01T00:00:00' 
-AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG(44.928516, -93.17721),$distance)) limit 10"""
+WHERE DATE > '${startString}' 
+and  DATE < '${endString}' 
+AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG(44.928516, -93.17721),$distance)) order by DATE limit 10"""
 		
 		
 		
@@ -47,16 +51,15 @@ AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG(44.928516, -93.17721),$distance)) limit
 		if (response.getStatus() < 400)  {
 			def json = response.getData()
 			def cols = json.columns
-			println "$cols"
 			def dateIndex = cols.indexOf("DATE")
 			def addressIndex = cols.indexOf("ADDRESS")
 			def descriptionIndex = cols.indexOf("DESCRIPTION")
 			json.rows.each {
 				def address = it[addressIndex]
-				println it[dateIndex] + " " + it[descriptionIndex] + " " +it[addressIndex]
+	//			println it[dateIndex] + " " + it[descriptionIndex] + " " +it[addressIndex]
 				Crime crime = new Crime()
 				crime.address = it[addressIndex]
-				crime.date = it[dateIndex]
+				crime.date = format.parse(it[dateIndex])
 				crime.description = it[descriptionIndex] 
 				crimes.add(crime)
 			}

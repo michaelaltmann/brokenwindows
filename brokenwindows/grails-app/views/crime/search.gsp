@@ -2,12 +2,19 @@
 <html>
 <head>
 <meta name="layout" content="main" />
-<title>Welcome to Grails</title>
-<script type="text/javascript">
-function showCrimes(response) {
-	alert("Got " + response)
-}
-</script>
+<title>Crime Search</title>
+<g:javascript library="jquery" />
+ 
+<g:javascript type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery("#startDate").datepicker({
+			dateFormat : 'yy/mm/dd'
+		});
+		jQuery("#endDate").datepicker({
+			dateFormat : 'yy/mm/dd'
+		});
+	})
+</g:javascript>
 <style type="text/css" media="screen">
 #status {
 	background-color: #eee;
@@ -47,7 +54,7 @@ function showCrimes(response) {
 }
 
 #page-body {
-	margin: 2em 1em 1.25em 18em;
+	margin: 2em 1em 1.25em 1em;
 }
 
 h2 {
@@ -85,12 +92,11 @@ p {
 </style>
 </head>
 <body>
-	<a href="#page-body" class="skip"><g:message
-			code="default.link.skip.label" default="Skip to content&hellip;" /></a>
-	
+
 	<div id="page-body" role="main">
-	<H3>Find Crimes Near Me </H3>
-		<g:formRemote name="searchCrimes" update="updateMe" url="[controller:'crime', action:'search']" >
+		<H3>Find Crimes Near You</H3>
+		<g:formRemote name="searchCrimes" update="crimeRows"
+			url="[controller:'crime', action:'search']">
 			<table>
 				<tbody>
 					<tr class="prop">
@@ -101,12 +107,12 @@ p {
 					<tr class="prop">
 						<td class="name" valign="top">Start date</td>
 						<td class="value" valign="top"><input type="text"
-							name="startDate" /></td>
+							id="startDate" name="startDate" value="2011/02/28"></td>
 					</tr>
 					<tr class="prop">
 						<td class="name" valign="top">End date</td>
 						<td class="value" valign="top"><input type="text"
-							name="endDate" /></td>
+							id="endDate" name="endDate" value="2012/06/15"/></td>
 					</tr>
 					<tr class="prop">
 						<td class="name" valign="top">Distance (meters)</td>
@@ -115,11 +121,19 @@ p {
 					</tr>
 				</tbody>
 			</table>
-			<g:submitButton name="Search"/>
-			</g:formRemote>
-			<table><tbody>
-					<div id="updateMe"/>			
-			</tbody></table>
+			<g:submitButton name="Search" />
+		</g:formRemote>
+		<table>
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Crime</th>
+					<th>Address</th>
+				</tr>
+			</thead>
+			<tbody id="crimeRows">
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

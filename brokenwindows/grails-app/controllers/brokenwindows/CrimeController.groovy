@@ -1,8 +1,6 @@
 package brokenwindows
 
 import grails.converters.JSON
-import java.awt.TexturePaintContext.Int;
-
 class CrimeController {
 	CrimeQuery query = new CrimeQuery()
 	def index () {
@@ -11,7 +9,9 @@ class CrimeController {
 	def search ()  {
 		def distance = params.int('distance')
 		if (distance == null) distance = 1000
-		List crimes = query.getCrimes(distance)
+		Date startDate = Date.parse('yyyy/mm/dd', params.startDate)
+		Date endDate =  Date.parse('yyyy/mm/dd', params.endDate)
+		List crimes = query.getCrimes(params.address, startDate, endDate, distance)
 		render(template: "crimes", collection: crimes)
 	}
 }
