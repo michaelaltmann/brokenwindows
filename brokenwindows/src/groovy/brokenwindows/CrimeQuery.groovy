@@ -22,16 +22,41 @@ class CrimeQuery {
 		p.load(CrimeQuery.class.getResourceAsStream("/app.properties"))
 		APPLICATION_KEY = p.getProperty("google.api.key")
 	}
-	public List getCrimes(String homeAddress, Date startDate, Date endDate, int distance ) {
+	
+	List<Double> geocode(String address) {
+		def latlng = []
 		HttpURLClient http = new HttpURLClient()
 		
+		"http://maps.googleapis.com"
+		
+		HttpResponseDecorator response =  http.request(
+			url : 'https://maps.googleapis.com',
+			path: "/maps/api/geocode/json" ,
+			query : [ address : (address),
+				sensor : 'false'],
+			method: GET,
+			contentType: JSON,
+			headers:[Accept : 'application/xml','User-Agent':'Mozilla/5.0 Ubuntu/8.10 Firefox/3.0.4'] )
+		if (response.getStatus() < 400)  {
+			def json = response.getData()
+			println json
+			latlng .add (json.results.geometry.location.lat[0])
+			latlng .add (json.results.geometry.location.lng[0])
+		}
+		return latlng // [44.928516, -93.17721];
+	}
+	
+	
+	public List getCrimes(String homeAddress, Date startDate, Date endDate, int distance ) {
+		HttpURLClient http = new HttpURLClient()
+		List pos = geocode(homeAddress)
 		SimpleDateFormat format = new SimpleDateFormat('yyyy-MM-dd\'T\'HH:mm:ss')
 		String startString = format.format(startDate)
 		String endString = format.format(endDate)
 		String sql ="""SELECT  * FROM 1nSF0DFb9b_q-YcLnLWSSTdB8HmgxbBZJJ2HGY00 
 WHERE DATE > '${startString}' 
 and  DATE < '${endString}' 
-AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG(44.928516, -93.17721),$distance)) order by DATE limit 10"""
+AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG(${pos[0]},${pos[1]}),$distance)) order by DATE limit 10"""
 		
 		
 		

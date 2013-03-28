@@ -100,9 +100,9 @@ p {
 			<table>
 				<tbody>
 					<tr class="prop">
-						<td class="name" valign="top">Address</td>
+						<td class="name" valign="top">Street Address (in St Paul)</td>
 						<td class="value" valign="top"><input type="text"
-							name="address" /></td>
+							name="address" value = "480 SNELLING AV S, St Paul, MN"/></td>
 					</tr>
 					<tr class="prop">
 						<td class="name" valign="top">Start date</td>
@@ -117,7 +117,7 @@ p {
 					<tr class="prop">
 						<td class="name" valign="top">Distance (meters)</td>
 						<td class="value" valign="top"><input type="text"
-							name="distance" /></td>
+							name="distance" value="1000"/></td>
 					</tr>
 				</tbody>
 			</table>

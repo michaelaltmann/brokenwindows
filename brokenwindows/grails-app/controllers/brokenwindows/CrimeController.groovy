@@ -11,7 +11,8 @@ class CrimeController {
 		if (distance == null) distance = 1000
 		Date startDate = Date.parse('yyyy/mm/dd', params.startDate)
 		Date endDate =  Date.parse('yyyy/mm/dd', params.endDate)
-		List crimes = query.getCrimes(params.address, startDate, endDate, distance)
+		String address = params.address + ", St Paul, MN"
+		List crimes = query.getCrimes(address, startDate, endDate, distance)
 		render(template: "crimes", collection: crimes)
 	}
 }
