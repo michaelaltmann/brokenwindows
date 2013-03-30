@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
 		<g:layoutHead/>
 		<g:javascript library="jquery" plugin="jquery"/>
+		<r:require module="jquery-ui"/>
 		<r:layoutResources />
 	</head>
 	<body>

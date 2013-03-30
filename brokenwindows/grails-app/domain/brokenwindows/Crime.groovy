@@ -2,7 +2,7 @@ package brokenwindows
 
 class Crime {
 	String address
-	String date
+	Date date
 	String description
     static constraints = {
     }
