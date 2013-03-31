@@ -6,6 +6,7 @@
 <g:javascript library="jquery" />
  
 <g:javascript type="text/javascript">
+	var lat, lng;
 	jQuery(document).ready(function() {
 		jQuery("#startDate").datepicker({
 			dateFormat : 'yy/mm/dd'
@@ -13,7 +14,19 @@
 		jQuery("#endDate").datepicker({
 			dateFormat : 'yy/mm/dd'
 		});
-	})
+	});
+	function onGeocode(data) {
+		jQuery('#lat').val(data.lat);
+		jQuery('#lng').val(data.lng);
+	};
+	function geocodeAddress(address) {
+		jQuery.ajax({
+		url : "geocode",
+		data : {'address': address},
+		dataType : 'json',
+		success : onGeocode
+		});
+	};
 </g:javascript>
 <style type="text/css" media="screen">
 #status {
@@ -97,12 +110,14 @@ p {
 		<H3>Find Crimes Near You</H3>
 		<g:formRemote name="searchCrimes" update="crimeRows"
 			url="[controller:'crime', action:'search']">
+			<input id='lat' name='lat' type='hidden' />
+			<input id='lng' name='lng' type='hidden' />
 			<table>
 				<tbody>
 					<tr class="prop">
 						<td class="name" valign="top">Street Address (in St Paul)</td>
 						<td class="value" valign="top"><input type="text"
-							name="address" value = "480 SNELLING AV S, St Paul, MN"/></td>
+							name="address" value = "480 SNELLING AV S, St Paul, MN" onblur="geocodeAddress(this.value)"/></td>
 					</tr>
 					<tr class="prop">
 						<td class="name" valign="top">Start date</td>

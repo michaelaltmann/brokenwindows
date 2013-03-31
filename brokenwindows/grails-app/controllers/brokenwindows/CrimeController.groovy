@@ -6,13 +6,20 @@ class CrimeController {
 	def index () {
 		render (view: "search")
 	}
+	def geocode() {
+		String address = params.address
+		def latlng = query.geocode(address)
+		render latlng as JSON
+	}
 	def search ()  {
 		def distance = params.int('distance')
 		if (distance == null) distance = 1000
 		Date startDate = Date.parse('yyyy/mm/dd', params.startDate)
 		Date endDate =  Date.parse('yyyy/mm/dd', params.endDate)
 		String address = params.address + ", St Paul, MN"
-		List crimes = query.getCrimes(address, startDate, endDate, distance)
+		double lat = params.double('lat')
+		double lng = params.double('lng')
+		List crimes = query.getCrimes(lat, lng, startDate, endDate, distance)
 		render(template: "crimes", collection: crimes)
 	}
 }
@@ -23,19 +30,3 @@ class Address {
 	String city
 	String state
 }
-/*
-class Geocoder {
-	String base = 'http://maps.google.com/maps/api/geocode/xml?'
-	
-	void fillInLatLng(Address address) {
-		String urlEncodedAddress =
-				[address.street, address.city, address.state].collect {
-					URLEncoder.encode(it,'UTF-8')
-				}.join(',+')
-		String url = base + [sensor:false, address:urlEncodedAddress].collect { it }.join('&')
-		def response = new XmlSlurper().parse(url)
-		String latitude = response.result.geometry.location.lat[0] ?: "0.0"
-		String longitude = response.result.geometry.location.lng[0] ?: "0.0"
-	}
-}
-*/
