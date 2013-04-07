@@ -14,12 +14,26 @@
 		jQuery("#endDate").datepicker({
 			dateFormat : 'yy/mm/dd'
 		});
+		jQuery('#search').attr('disabled','disabled');
 	});
 	function onGeocode(data) {
-		jQuery('#lat').val(data.lat);
-		jQuery('#lng').val(data.lng);
+		if (data.lat != null && data.lng != null) {
+			jQuery('#lat').val(data.lat);
+			jQuery('#lng').val(data.lng);
+			jQuery('#location').html( '('+ data.lat+', '+ data.lng +')');
+			jQuery('#search').removeAttr('disabled');
+		} else {
+			jQuery('#location').html('Failed to geocode address');
+			jQuery('#location').addClass('error');
+		}
 	};
 	function geocodeAddress(address) {
+		jQuery('#search').attr('disabled','disabled');
+		jQuery('#location').html('');
+		jQuery('#location').removeClass('error');
+
+		address = address + ", St Paul, MN";
+		
 		jQuery.ajax({
 		url : "geocode",
 		data : {'address': address},
@@ -43,7 +57,15 @@
 	-webkit-border-radius: 0.6em;
 	border-radius: 0.6em;
 }
-
+#location {
+	font-size: small;
+	height: 1.8em;
+	padding: 0.2em 0.4em 0.2em 0.4em;
+	color: gray;
+}
+#location.error  {
+	color: red;
+}
 .ie6 #status {
 	display: inline;
 	/* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
@@ -117,7 +139,9 @@ p {
 					<tr class="prop">
 						<td class="name" valign="top">Street Address (in St Paul)</td>
 						<td class="value" valign="top"><input type="text"
-							name="address" value = "480 SNELLING AV S, St Paul, MN" onblur="geocodeAddress(this.value)"/></td>
+							name="address" value = "" onblur="geocodeAddress(this.value)"/>
+							<div id='location' />
+							</td>
 					</tr>
 					<tr class="prop">
 						<td class="name" valign="top">Start date</td>
@@ -134,9 +158,13 @@ p {
 						<td class="value" valign="top"><input type="text"
 							name="distance" value="1000"/></td>
 					</tr>
+					<tr>
+					<td></td>
+					<td><g:submitButton id='search' name="Search" /></td>
+					</tr>
 				</tbody>
 			</table>
-			<g:submitButton name="Search" />
+			
 		</g:formRemote>
 		<table>
 			<thead>
@@ -149,6 +177,5 @@ p {
 			<tbody id="crimeRows">
 			</tbody>
 		</table>
-	</div>
 </body>
 </html>
