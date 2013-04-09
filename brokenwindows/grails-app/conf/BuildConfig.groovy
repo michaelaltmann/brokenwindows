@@ -17,7 +17,7 @@ grails.project.dependency.resolution = {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
     }
-    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
     legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
 
@@ -46,19 +46,23 @@ grails.project.dependency.resolution = {
    }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
-        runtime ":jquery:1.8.3"
-        runtime ":resources:1.1.6"
-		compile ":jquery-ui:1.8.24"
+//        runtime ":hibernate:$grailsVersion"
+        runtime ":jquery:1.9.1"
+		// Does not work in GAE because it needs a TempDir
+		//       runtime ":resources:1.2"
+//		compile ":jquery-ui:1.10.2"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
         //runtime ":yui-minify-resources:0.1.5"
 
-        build ":tomcat:$grailsVersion"
+		// Uncomment tomcat to run locally
+		// Comment this to run in Google App Engine
+//        build ":tomcat:$grailsVersion"
 
-        runtime ":database-migration:1.3.2"
-
+//        runtime ":database-migration:1.3.2"
+//		compile ":app-engine:0.8.10"
+//		compile ":gorm-jpa:1.0.0.M1"
         compile ':cache:1.0.1'
     }
 }
