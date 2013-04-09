@@ -3,7 +3,8 @@
 <head>
 <meta name="layout" content="main" />
 <title>Crime Search</title>
-<g:javascript library="jquery" />
+<g:javascript src="jquery/jquery-1.9.1.min.js" />
+<g:javascript src="jquery-ui/ui/jquery-ui.js" />
  
 <g:javascript type="text/javascript">
 	var lat, lng;
@@ -137,7 +138,7 @@ p {
 			<table>
 				<tbody>
 					<tr class="prop">
-						<td class="name" valign="top">Street Address (in St Paul)</td>
+						<td class="name" valign="top">Street Address (ex. 480 Snelling Ave S)</td>
 						<td class="value" valign="top"><input type="text"
 							name="address" value = "" onblur="geocodeAddress(this.value)"/>
 							<div id='location' />

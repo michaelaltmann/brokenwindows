@@ -15,12 +15,10 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
 		<g:layoutHead/>
-		<g:javascript library="jquery" plugin="jquery"/>
-		<r:require module="jquery-ui"/>
 		<r:layoutResources />
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><img height='70px' src="${resource(dir: 'images', file: 'broken_windows.jpg')}" alt="Broken Windows"/><img height='70px' style="float:right" src="${resource(dir: 'images', file: 'broken_windows.jpg')}" alt="Broken Windows"/></div>
+	 	<div id="grailsLogo" role="banner"><img height='70px' src="${resource(dir: 'images', file: 'broken_windows.jpg')}" alt="Broken Windows"/><img height='70px' style="float:right" src="${resource(dir: 'images', file: 'broken_windows.jpg')}" alt="Broken Windows"/></div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
