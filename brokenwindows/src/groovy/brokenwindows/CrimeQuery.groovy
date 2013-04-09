@@ -80,10 +80,15 @@ AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG($lat,$lng),$distance)) order by DATE li
 			def dateIndex = cols.indexOf("DATE")
 			def addressIndex = cols.indexOf("ADDRESS")
 			def descriptionIndex = cols.indexOf("DESCRIPTION")
+			if (json.rows != null) {
+				println ("Received " + json.rows.size() + " rows")
+			} else {
+				println ("Received no rows")
+			}
 			json.rows.each {
 				try {
 					def address = it[addressIndex]
-					//			println it[dateIndex] + " " + it[descriptionIndex] + " " +it[addressIndex]
+					println it[dateIndex] + " " + it[descriptionIndex] + " " +it[addressIndex]
 					Crime crime = new Crime()
 					crime.address = it[addressIndex]
 					crime.date = format.parse(it[dateIndex])
@@ -93,6 +98,8 @@ AND  ST_INTERSECTS(ADDRESS,CIRCLE(LATLNG($lat,$lng),$distance)) order by DATE li
 					e.printStackTrace()
 				}
 			}
+		} else {
+			println ("HTTP Error status " + response.getStatus() )
 		}
 		return crimes
 	}
