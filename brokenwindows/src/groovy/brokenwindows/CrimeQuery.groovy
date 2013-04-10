@@ -38,11 +38,18 @@ class CrimeQuery {
 			contentType: JSON,
 			headers:[Accept : 'application/xml','User-Agent':'Mozilla/5.0 Ubuntu/8.10 Firefox/3.0.4'] )
 		if (response.getStatus() < 400)  {
-			def json = response.getData()
+			def json = response.getData()			
 			println json
-			double lat = (json.results.geometry.location.lat[0])
-			double lng = (json.results.geometry.location.lng[0])
-			return [lat : lat, lng: lng]
+			if (json.status != "OK") {
+					return [status : (json.status) ]
+			}
+			try {
+				double lat = (json.results.geometry.location.lat[0])
+				double lng = (json.results.geometry.location.lng[0])
+				return [lat : lat, lng: lng]
+			} catch (Exception e) {
+				return [status: e.getMessage()]
+			}
 		} else {
 			return []
 		}

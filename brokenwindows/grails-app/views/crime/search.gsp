@@ -24,10 +24,18 @@
 			jQuery('#location').html( '('+ data.lat+', '+ data.lng +')');
 			jQuery('#search').removeAttr('disabled');
 		} else {
-			jQuery('#location').html('Failed to geocode address');
+			var msg = 'Failed to geocode address';
+			if (data.status != null) msg += ": " + data.status; 
+			jQuery('#location').html(msg);
 			jQuery('#location').addClass('error');
 		}
 	};
+	function onGeocodeError(jqXHR,  textStatus,  errorThrown) {
+		jQuery('#location').html('Failed to geocode address: ' + errorThrown);
+		jQuery('#location').addClass('error');
+		
+	};
+	
 	function geocodeAddress(address) {
 		jQuery('#search').attr('disabled','disabled');
 		jQuery('#location').html('');
@@ -39,7 +47,8 @@
 		url : "geocode",
 		data : {'address': address},
 		dataType : 'json',
-		success : onGeocode
+		success : onGeocode,
+		error : onGeocodeError
 		});
 	};
 </g:javascript>
