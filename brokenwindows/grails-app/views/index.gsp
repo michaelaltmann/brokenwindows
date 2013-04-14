@@ -95,7 +95,7 @@ p {
 			using  <a href="https://scraperwiki.com/scrapers/stpaulcrimestat/">scraperwikis</a>
 			and  then stored in a <a
 				href="https://www.google.com/fusiontables/DataSource?docid=1nSF0DFb9b_q-YcLnLWSSTdB8HmgxbBZJJ2HGY00">Google
-				Fusion table</a>.
+				Fusion table</a>. The source code for this project is available on <A href="https://github.com/michaelaltmann/brokenwindows"> Github</A> 
 		</p>
 
 		<div id="controller-list" role="navigation">
