@@ -5,9 +5,10 @@
 <title>Crime Search</title>
 <g:javascript src="jquery/jquery-1.9.1.min.js" />
 <g:javascript src="jquery-ui/ui/jquery-ui.js" />
- 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <g:javascript type="text/javascript">
 	var lat, lng;
+	var geocoder;
 	jQuery(document).ready(function() {
 		jQuery("#startDate").datepicker({
 			dateFormat : 'yy/mm/dd'
@@ -16,8 +17,9 @@
 			dateFormat : 'yy/mm/dd'
 		});
 		jQuery('#search').attr('disabled','disabled');
+		geocoder = new google.maps.Geocoder();
 	});
-	function onGeocode(data) {
+	function onGeocodeServer(data) {
 		if (data.lat != null && data.lng != null) {
 			jQuery('#lat').val(data.lat);
 			jQuery('#lng').val(data.lng);
@@ -30,13 +32,52 @@
 			jQuery('#location').addClass('error');
 		}
 	};
-	function onGeocodeError(jqXHR,  textStatus,  errorThrown) {
+	function onGeocodeServerError(jqXHR,  textStatus,  errorThrown) {
 		jQuery('#location').html('Failed to geocode address: ' + errorThrown);
 		jQuery('#location').addClass('error');
 		
 	};
 	
+	
 	function geocodeAddress(address) {
+		jQuery('#search').attr('disabled','disabled');
+		jQuery('#location').html('');
+		jQuery('#location').removeClass('error');
+
+		address = address + ", St Paul, MN";
+	
+	 geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var streetNumber = "";
+        var route = "";
+        for (var index=0; index < results[0].address_components.length; index++) {
+        	var component = results[0].address_components[index];
+        	if (component.types[0] == "street_number") {
+        		streetNumber = component.short_name;
+        	} else if (component.types[0] == "route") {
+        		route = component.short_name;
+        	}
+        }
+		jQuery('#address').val(streetNumber + " " + route);
+      
+      	var lat = results[0].geometry.location.lat();
+      	var lng = results[0].geometry.location.lng();
+       	jQuery('#lat').val(lat);
+		jQuery('#lng').val(lng);
+ 		jQuery('#location').html( '('+ lat+', '+lng +')');
+		jQuery('#search').removeAttr('disabled');
+       	 
+      } else {
+		jQuery('#location').html('Failed to geocode address: ' + status);
+		jQuery('#location').addClass('error');  
+      }
+    });
+	}
+	
+	// The geocode API has usge limits.  Because all applications in Goole App Engine
+	// originate from a share IP pool, trying to geocode from a GAE server
+	// often leads to query limit errors
+	function geocodeAddressOnServer(address) {
 		jQuery('#search').attr('disabled','disabled');
 		jQuery('#location').html('');
 		jQuery('#location').removeClass('error');
@@ -47,8 +88,8 @@
 		url : "geocode",
 		data : {'address': address},
 		dataType : 'json',
-		success : onGeocode,
-		error : onGeocodeError
+		success : onGeocodeServer,
+		error : onGeocodeServerError
 		});
 	};
 </g:javascript>
@@ -140,6 +181,10 @@ p {
 
 	<div id="page-body" role="main">
 		<H3>Find Crimes Near You</H3>
+		First, enter a street address. Once your mouse leave the input field the address will be geocoded
+		and then you can adjust the date range and distance. 
+		Lastly, click 'Search' to get the first
+		10 crimes that meet your criteria.
 		<g:formRemote name="searchCrimes" update="crimeRows"
 			url="[controller:'crime', action:'search']">
 			<input id='lat' name='lat' type='hidden' />
@@ -149,7 +194,7 @@ p {
 					<tr class="prop">
 						<td class="name" valign="top">Street Address (ex. 480 Snelling Ave S)</td>
 						<td class="value" valign="top"><input type="text"
-							name="address" value = "" onblur="geocodeAddress(this.value)"/>
+							id= "address" name="address" value = "" onblur="geocodeAddress(this.value)"/>
 							<div id='location' />
 							</td>
 					</tr>
