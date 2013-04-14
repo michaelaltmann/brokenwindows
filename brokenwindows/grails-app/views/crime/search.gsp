@@ -199,7 +199,7 @@ p {
 			<table>
 				<tbody>
 					<tr class="prop">
-						<td class="name" valign="top">Street Address (ex. 480 Snelling Ave S)</td>
+						<td class="name" valign="top">St. Paul street address, ex. 480 Snelling Ave S</td>
 						<td class="value" valign="top"><input type="text"
 							id= "address" name="address" value = "" onblur="geocodeAddress(this.value)"/>
 							<div id='location' />
