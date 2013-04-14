@@ -18,3 +18,11 @@ If you want to run this application yourself, you will need to provide your own 
 obtained that ket, created a file called app.properties in brokenwindows/grails-app/conf and add a line like
 
     google.api.key=ABCDEFG12345678
+
+	
+To run the application locally, uncomment the tomcat line in BuildConfig.groovy and the use 
+    grails run-app
+
+To run the application in GAE, make sure you have populated app.properties and comment out the tomcat line in BuildConfig.groovy.  Then run
+    grails war '-Dgrails.war.exploded=true' '-Dgrails.project.war.exploded.dir=target/war'
+	appcfg update target/war
