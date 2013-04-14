@@ -81,11 +81,22 @@ p {
 </head>
 <body>
 	<div id="page-body" role="main">
-		<h1>Twin Cities Crime Notification Application </h1>
-		<p>This application demonstrates some of the services that could be provided 
-		to residents if we had a real-time feed of data from the Twin Cities police departments.
-		For example, a resident could request that an e-mail or SMS text message be sent if
-		a crime is reported within a certain distance of the resident's home.</p>
+		<h1>Twin Cities Crime Notification Application</h1>
+		<p>This application demonstrates some of the services that could
+			be provided to residents if we had a real-time feed of data from the
+			Twin Cities police departments. For example, a resident could request
+			that an e-mail or SMS text message be sent if a crime is reported
+			within a certain distance of the resident's home.</p>
+		<p>
+			This is a Groovy-Grails web application that utilizes a database of
+			crimes in St Paul, MN. The data were harvested from Excel
+			spreadsheets that the St Paul police dept posts weekly on the <A
+				href="http://www.stpaul.gov/DocumentCenter/">government web site</A>
+			using  <a href="https://scraperwiki.com/scrapers/stpaulcrimestat/">scraperwikis</a>
+			and  then stored in a <a
+				href="https://www.google.com/fusiontables/DataSource?docid=1nSF0DFb9b_q-YcLnLWSSTdB8HmgxbBZJJ2HGY00">Google
+				Fusion table</a>.
+		</p>
 
 		<div id="controller-list" role="navigation">
 			<h2>Available Services</h2>
