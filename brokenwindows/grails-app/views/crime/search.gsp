@@ -188,7 +188,7 @@ p {
 
 	<div id="page-body" role="main">
 		<H3>Find Crimes Near You</H3>
-		First, enter a street address. Once your mouse leave the input field the address will be geocoded
+		First, enter a street address. When your mouse leaves the input field, the address will be geocoded
 		and then you can adjust the date range and distance. 
 		Lastly, click 'Search' to get the first
 		10 crimes that meet your criteria.
