@@ -5,7 +5,9 @@
 <title>Crime Search</title>
 <g:javascript src="jquery/jquery-1.9.1.min.js" />
 <g:javascript src="jquery-ui/ui/jquery-ui.js" />
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+ <link rel="stylesheet" href="../js/jquery-ui/themes/base/jquery-ui.css" />
+ <link rel="stylesheet" href="../js/jquery-ui/themes/base/jquery.ui.all.css" />
+ <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <g:javascript type="text/javascript">
 	var lat, lng;
 	var geocoder;
@@ -175,6 +177,11 @@ p {
 		margin-top: 0;
 	}
 }
+
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}
+
 </style>
 </head>
 <body>
